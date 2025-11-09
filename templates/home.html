@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Coins</h1>
+<table class="table w-75 mx-auto text-center">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="w-25">Coin ID</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Name</th>
+            <th scope="col">Trends</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for coin in coins %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ coin.id }}</td>
+            <td>{{ coin.symbol }}</td>
+            <td>{{ coin.name }}</td>
+            <td><img src="/static/charts/{{ coin.symbol }}.png" alt="{{ coin.name }} trends"></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
