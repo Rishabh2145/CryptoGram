@@ -14,7 +14,6 @@ def read_root():
   { "id": "cardano", "symbol": "ADA", "name": "Cardano" },
   { "id": "dogecoin", "symbol": "DOGE", "name": "Dogecoin" },
   { "id": "tron", "symbol": "TRX", "name": "TRON" },
-  { "id": "matic-network", "symbol": "MATIC", "name": "Polygon" },
   { "id": "polkadot", "symbol": "DOT", "name": "Polkadot" },
   { "id": "litecoin", "symbol": "LTC", "name": "Litecoin" },
   { "id": "avalanche-2", "symbol": "AVAX", "name": "Avalanche" },

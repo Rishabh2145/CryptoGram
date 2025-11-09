@@ -3,8 +3,8 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Coins</h1>
-<table class="table w-75 mx-auto text-center">
+<h1 class="m-3 text-center">Coins</h1>
+<table class="table mx-auto text-center justify-content-center align-items-center" style="justify-content: center; width: 75vw;">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -16,12 +16,12 @@
     </thead>
     <tbody>
         {% for coin in coins %}
-        <tr>
-            <th scope="row">{{ loop.index }}</th>
+        <tr style="height : 80px; cursor: pointer;" onclick="window.location.href='/coin/{{ coin.id }}'">
+            <th scope="row" style="vertical-align: middle;">{{ loop.index }}</th>
             <td>{{ coin.id }}</td>
             <td>{{ coin.symbol }}</td>
             <td>{{ coin.name }}</td>
-            <td><img src="/static/charts/{{ coin.symbol }}.png" alt="{{ coin.name }} trends"></td>
+            <td><img src="/static/charts/{{ coin.symbol }}.png" alt="{{ coin.name }} trends" height="80px"></td>
         </tr>
         {% endfor %}
     </tbody>
