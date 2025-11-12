@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ coin_name }}{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1>{{ coin_name }} ({{ coin_symbol }})</h1>
+    <p>💰 Current Price: ${{ "%.2f"|format(coin_price) }}</p>
+    <p>🏦 Market Cap: ${{ "{:,}".format(coin_market_cap) }}</p>
+    <p style="max-width:800px; margin:auto;">{{ coin_desc | safe }}</p>
+
+    <hr class="my-4">
+
+    <h4>Price Chart</h4>
+
+    <div class="btn-group mb-4">
+        <button class="btn btn-outline-primary" onclick="loadChart(7)">7 Days</button>
+        <button class="btn btn-outline-primary" onclick="loadChart(14)">2 Weeks</button>
+        <button class="btn btn-outline-primary" onclick="loadChart(30)">1 Month</button>
+    </div>
+
+    <div>
+        <img id="chartImage" src="{{ chart_url }}" alt="{{ coin_name }} chart" height="300">
+    </div>
+</div>
+
+<script>
+function loadChart(days) {
+    fetch(`/coin/{{ coin_id }}`)
+    .then(response => response.text())
+    .then(html => {
+        // regenerate chart URL for selected days
+        let img = document.getElementById('chartImage');
+        img.src = `/static/charts/{{ coin_symbol }}_${days}d.png?t=` + new Date().getTime();
+    });
+}
+</script>
+{% endblock %}

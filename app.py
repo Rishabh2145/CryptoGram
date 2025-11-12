@@ -9,6 +9,10 @@ import time
 
 app = Flask(__name__)
 
+#config for coin_details.py blueprint
+from coin_details import coin_bp
+app.register_blueprint(coin_bp)  # register the coin routes
+
 api = "http://127.0.0.1:8000/"
 
 def get_coins():
@@ -86,17 +90,7 @@ def get_home():
 
 @app.route("/coin/<coin_id>", methods=["GET"])
 def api_coins(coin_id):
-    return render_template("coindetail.html", coin_id=coin_id)
-
-@app.route('/coin/<coin_id>')
-def coin_detail(coin_id):
-    # fetch data from API to get the symbol
-    url = f"https://api.coingecko.com/api/v3/coins/{coin_id}"
-    response = requests.get(url)
-    coin = response.json()
-    
-    coin_symbol = coin["symbol"]
-    return render_template('coin_detail.html', coin_id=coin_id, coin_symbol=coin_symbol)
+    return render_template("coin_detail.html", coin_id=coin_id)
 
 
 if __name__ == "__main__":
