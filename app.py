@@ -53,7 +53,7 @@ def charts(coins):
                 plt.tight_layout()
 
                 save_path = f"static/charts/{symbol}.png"
-                plt.savefig(save_path, bbox_inches='tight', pad_inches=0, transparent=True)
+                plt.savefig(save_path, transparent=True)
                 plt.close()
 
                 print(f"✅ [{idx}] Saved {symbol}")
@@ -86,7 +86,18 @@ def get_home():
 
 @app.route("/coin/<coin_id>", methods=["GET"])
 def api_coins(coin_id):
-    return f"Details for coin: {coin_id}"
+    return render_template("coindetail.html", coin_id=coin_id)
+
+@app.route('/coin/<coin_id>')
+def coin_detail(coin_id):
+    # fetch data from API to get the symbol
+    url = f"https://api.coingecko.com/api/v3/coins/{coin_id}"
+    response = requests.get(url)
+    coin = response.json()
+    
+    coin_symbol = coin["symbol"]
+    return render_template('coin_detail.html', coin_id=coin_id, coin_symbol=coin_symbol)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
