@@ -25,14 +25,16 @@
 </div>
 
 <script>
-function loadChart(days) {
-    fetch(`/coin/{{ coin_id }}`)
-    .then(response => response.text())
-    .then(html => {
-        // regenerate chart URL for selected days
-        let img = document.getElementById('chartImage');
-        img.src = `/static/charts/{{ coin_symbol }}_${days}d.png?t=` + new Date().getTime();
-    });
+async function loadChart(days) {
+    const img = document.getElementById("chartImage");
+
+    const res = await fetch(`/coin/{{ coin_id }}/chart?days=${days}&symbol={{ coin_symbol }}`);
+    const data = await res.json();
+
+    img.src = data.chart_url + "?t=" + Date.now();
 }
 </script>
+
+
+
 {% endblock %}
