@@ -31,6 +31,9 @@ def generate_chart(coin_id, coin_symbol, days):
     plt.figure(figsize=(8, 3))
     plt.plot(x, y)
     plt.tight_layout()
+    plt.grid()
+    plt.xlabel("Time")
+    plt.ylabel("Price (USD)")
     plt.savefig(filepath)
     plt.close()
 

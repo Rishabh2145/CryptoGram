@@ -36,9 +36,6 @@ def charts(coins):
         symbol = coin.get("symbol", "unknown").upper()
         save_path = f"static/charts/{symbol}.png"
 
-        # Skip generation if file already exists
-        if os.path.exists(save_path):
-            continue
 
         for attempt in range(3):
             try:
