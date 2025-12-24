@@ -9,24 +9,15 @@ import time
 
 app = Flask(__name__)
 
-# ─────────────────────────────────────────────
-# GLOBALS
-# ─────────────────────────────────────────────
 CHART_FOLDER = "static/charts"
 os.makedirs(CHART_FOLDER, exist_ok=True)
 
 COIN_API = "https://api.coingecko.com/api/v3/coins"
-LOCAL_API = "http://127.0.0.1:8000/"   # your local API
+LOCAL_API = "http://127.0.0.1:8000/"   
 
-# ─────────────────────────────────────────────
-# UTILITY: Get all coins from your local API
-# ─────────────────────────────────────────────
 def get_coins():
     return requests.get(LOCAL_API).json()
 
-# ─────────────────────────────────────────────
-# UTILITY: Generate a 7-day small icon chart
-# ─────────────────────────────────────────────
 def charts(coins):
     os.makedirs("static/charts", exist_ok=True)
     session = requests.Session()
@@ -72,9 +63,6 @@ def charts(coins):
 
         time.sleep(1.1)  # avoid CoinGecko rate limits
 
-# ─────────────────────────────────────────────
-# NEW: Generate full-size chart for coin pages
-# ─────────────────────────────────────────────
 def generate_chart(coin_id, symbol, days):
     url = f"{COIN_API}/{coin_id}/market_chart"
     params = {"vs_currency": "usd", "days": days}
@@ -99,9 +87,6 @@ def generate_chart(coin_id, symbol, days):
 
     return f"/static/charts/{filename}"
 
-# ─────────────────────────────────────────────
-# HOME PAGE
-# ─────────────────────────────────────────────
 @app.route("/")
 def home():
     coins = get_coins()
@@ -113,9 +98,6 @@ def get_home():
     coins = get_coins()
     return render_template("home.html", coins=coins)
 
-# ─────────────────────────────────────────────
-# NEW: FULL COIN DETAIL PAGE
-# ─────────────────────────────────────────────
 @app.route("/coin/<coin_id>")
 def coin_page(coin_id):
     url = f"{COIN_API}/{coin_id}"
@@ -153,9 +135,6 @@ def coin_page(coin_id):
         chart_url=f"/static/charts/{coin_symbol}_7d.png"
     )
 
-# ─────────────────────────────────────────────
-# JSON ENDPOINT: Update chart on click
-# ─────────────────────────────────────────────
 @app.route("/coin/<coin_id>/chart")
 def update_chart(coin_id):
     symbol = request.args.get("symbol")
@@ -176,7 +155,7 @@ def update_chart(coin_id):
             chart_url=existing_path,
             message="Using cached chart"
         )
-
-# ─────────────────────────────────────────────
+    
+    
 if __name__ == "__main__":
     app.run(debug=True)
